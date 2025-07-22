@@ -1,9 +1,8 @@
+import DashboardComp from "@/components/Dashboard/DashboardComp";
 
 
 export default function Dashboard() {
     return (
-        <div>
-            <h1>Dashboard</h1>
-        </div>
+       <DashboardComp />
     )
 }

@@ -1,4 +1,5 @@
 import Navbar from "@/components/Common/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function CommonLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -7,6 +8,7 @@ export default function CommonLayout({ children }: { children: React.ReactNode }
                 <Navbar />
             </div>
             {children}
+            <Toaster />
         </div>
     )
 }   
