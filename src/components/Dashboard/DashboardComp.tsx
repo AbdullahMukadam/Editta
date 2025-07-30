@@ -6,11 +6,18 @@ import { Input } from "../ui/input";
 import { getThumbnailId } from "@/lib/getThumbnailId";
 import { toast } from "sonner";
 import ThumbnailViewer from "./ThumbnailViewer";
+import Loader from "../loader";
 
 export default function DashboardComp() {
     const [videoLink, setVideoLink] = useState('')
     const [loading, setLoading] = useState(false)
     const [thumbnail, setThumbnail] = useState('')
+    const [extractedDataLoadingState, setextractedDataLoadingState] = useState({
+        startLoading: false,
+        extractedText: false,
+        imageSegmentation: false,
+        extractingLayers: false,
+    })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -25,6 +32,19 @@ export default function DashboardComp() {
         }
     }
 
+    const ExtractData = () => {
+        setextractedDataLoadingState({
+            startLoading:true,
+            extractedText: false,
+            imageSegmentation: false,
+            extractingLayers: false,
+        })
+
+
+
+
+    }
+
     function getThumbnail(videoId: string) {
         const maxResImage = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
         const img = new Image()
@@ -34,6 +54,7 @@ export default function DashboardComp() {
             setLoading(false)
             setThumbnail(maxResImage)
             toast.success("Max Resolution Thumbnail Generated Successfully")
+
         }
         img.onerror = () => {
             const hqImage = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
@@ -54,16 +75,25 @@ export default function DashboardComp() {
     }
 
     return (
-        <div className="w-full p-3 font-brcolage-grotesque">
+        <div className="w-full p-3 font-brcolage-grotesque relative">
+
+           {extractedDataLoadingState.startLoading && <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-sm z-50">
+                <div className="w-[300px] p-6 bg-zinc-900 rounded-2xl flex flex-col items-center justify-center space-y-4 shadow-2xl border border-zinc-700">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-blue-500 border-t-transparent"></div>
+                    <h1 className="text-white text-lg font-semibold">Processing your request...</h1>
+                    <p className="text-zinc-300 text-sm text-center leading-relaxed">Please wait while we complete the operation.</p>
+                </div>
+            </div>}
             <div className="w-full text-center">
                 <h1 className="text-2xl font-bold md:text-4xl">Paste Your Youtube Video Link</h1>
-                <div className="w-full flex items-center justify-center gap-2">
+                <div className="w-full flex flex-col items-center justify-center gap-2">
                     <form onSubmit={handleSubmit} className="w-full md:w-[50%] flex items-center justify-center gap-2">
                         <Input value={videoLink} onChange={(e) => setVideoLink(e.target.value)} type="text" placeholder="Paste Your Youtube Video Link" className="w-full mt-2 p-2 border border-gray-300 rounded-md" />
                         <Button className="mt-2 p-2 bg-black text-white rounded-md">Get Thumbnail</Button>
                     </form>
+                    {thumbnail && <Button className="bg-blue-400" onClick={ExtractData}>Start Editing</Button>}
                 </div>
-                {loading && <p className="mt-2 text-center animate-pulse text-green-500">Loading...</p>}
+                {loading && <p className="mt-2 text-center animate-pulse text-black">Loading...</p>}
                 {thumbnail && (
                     <div className="w-full flex items-center justify-center">
                         <ThumbnailViewer thumbnail={thumbnail} />
