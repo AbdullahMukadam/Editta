@@ -32,13 +32,33 @@ export default function DashboardComp() {
         }
     }
 
-    const ExtractData = () => {
+    const ExtractData = async () => {
         setextractedDataLoadingState({
-            startLoading:true,
-            extractedText: false,
+            startLoading: true,
+            extractedText: true,
             imageSegmentation: false,
             extractingLayers: false,
         })
+
+        const extractText = await fetch("/api/extract/textextract", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                thumbnailUrl: thumbnail
+            })
+        })
+        const textresponse = await extractText.json()
+        if (textresponse.success) {
+            console.log(textresponse.textData)
+            setextractedDataLoadingState({
+                startLoading: true,
+                extractedText: false,
+                imageSegmentation: true,
+                extractingLayers: false,
+            })
+        }
 
 
 
@@ -74,13 +94,26 @@ export default function DashboardComp() {
 
     }
 
+    function getLoadingState() {
+        if (extractedDataLoadingState.startLoading && extractedDataLoadingState.extractedText) {
+            return "Extracting text"
+        } else if (extractedDataLoadingState.startLoading && extractedDataLoadingState.extractingLayers) {
+            return "Extracting Layers"
+        } else if (extractedDataLoadingState.startLoading && extractedDataLoadingState.imageSegmentation) {
+            return "Image segmentation started"
+        } else {
+            return "Loading"
+        }
+
+    }
+
     return (
         <div className="w-full p-3 font-brcolage-grotesque relative">
 
-           {extractedDataLoadingState.startLoading && <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-sm z-50">
+            {extractedDataLoadingState.startLoading && <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-sm z-50">
                 <div className="w-[300px] p-6 bg-zinc-900 rounded-2xl flex flex-col items-center justify-center space-y-4 shadow-2xl border border-zinc-700">
-                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-blue-500 border-t-transparent"></div>
-                    <h1 className="text-white text-lg font-semibold">Processing your request...</h1>
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-white border-t-transparent"></div>
+                    <h1 className="text-white text-lg font-semibold">{getLoadingState()}</h1>
                     <p className="text-zinc-300 text-sm text-center leading-relaxed">Please wait while we complete the operation.</p>
                 </div>
             </div>}
