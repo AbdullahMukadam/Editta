@@ -6,7 +6,6 @@ import { Input } from "../ui/input";
 import { getThumbnailId } from "@/lib/getThumbnailId";
 import { toast } from "sonner";
 import ThumbnailViewer from "./ThumbnailViewer";
-import Loader from "../loader";
 
 export default function DashboardComp() {
     const [videoLink, setVideoLink] = useState('')
@@ -58,6 +57,8 @@ export default function DashboardComp() {
                 imageSegmentation: true,
                 extractingLayers: false,
             })
+
+            
         }
 
 

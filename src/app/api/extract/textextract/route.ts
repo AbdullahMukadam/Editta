@@ -18,8 +18,9 @@ export async function POST(request: NextRequest) {
 
     const imageBuffer = await response.arrayBuffer()
     const createworker = await createWorker("eng")
-    const { data: { text } } = await createworker.recognize(Buffer.from(imageBuffer))
-    console.log(text)
+    const { data } = await createworker.recognize(Buffer.from(imageBuffer))
+    const { text, blocks, box } = data;
+    console.log(data)
     await createworker.terminate()
     // have to fix the module couldnt find issue.
 
