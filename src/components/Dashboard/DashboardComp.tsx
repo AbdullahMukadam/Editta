@@ -6,11 +6,15 @@ import { Input } from "../ui/input";
 import { getThumbnailId } from "@/lib/getThumbnailId";
 import { toast } from "sonner";
 import ThumbnailViewer from "./ThumbnailViewer";
+import { generateuniqueId } from "@/utils/generateUniqueId";
+import { useRouter } from "next/navigation";
+
 
 export default function DashboardComp() {
     const [videoLink, setVideoLink] = useState('')
     const [loading, setLoading] = useState(false)
     const [thumbnail, setThumbnail] = useState('')
+    const router = useRouter();
     const [extractedDataLoadingState, setextractedDataLoadingState] = useState({
         startLoading: false,
         extractedText: false,
@@ -32,38 +36,85 @@ export default function DashboardComp() {
     }
 
     const ExtractData = async () => {
-        setextractedDataLoadingState({
-            startLoading: true,
-            extractedText: true,
-            imageSegmentation: false,
-            extractingLayers: false,
-        })
-
-        const extractText = await fetch("/api/extract/textextract", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                thumbnailUrl: thumbnail
-            })
-        })
-        const textresponse = await extractText.json()
-        if (textresponse.success) {
-            console.log(textresponse.textData)
+        try {
             setextractedDataLoadingState({
                 startLoading: true,
-                extractedText: false,
-                imageSegmentation: true,
+                extractedText: true,
+                imageSegmentation: false,
                 extractingLayers: false,
             })
 
-            
+            const extractText = await fetch("/api/extract/textextract", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    thumbnailUrl: thumbnail
+                })
+            })
+            const textresponse = await extractText.json()
+            if (textresponse.success) {
+                console.log(textresponse.textData)
+                setextractedDataLoadingState({
+                    startLoading: true,
+                    extractedText: false,
+                    imageSegmentation: true,
+                    extractingLayers: false,
+                })
+
+                const imageSegmentation = await fetch("/api/extract/imagesegmentation", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        thumbnailUrl: thumbnail
+                    })
+                })
+
+                const imageSegmentationData = await imageSegmentation.json();
+
+                if (imageSegmentationData.success) {
+                    console.log(imageSegmentationData)
+
+                    setextractedDataLoadingState({
+                        startLoading: true,
+                        extractedText: false,
+                        imageSegmentation: false,
+                        extractingLayers: true,
+                    })
+
+                    const extractedColors = await fetch("/api/extract/extractcolors", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            thumbnailUrl: thumbnail
+                        })
+                    })
+                    const extractedColorsData = await extractedColors.json()
+                    if (extractedColorsData.success) {
+                        console.log(extractedColorsData)
+
+                        const uniqueId = generateuniqueId()
+                        router.push(`/dashboard/edit/${uniqueId}`)
+                    }
+
+                }
+
+            }
+        } catch (error) {
+            setextractedDataLoadingState({
+                startLoading: false,
+                extractedText: false,
+                imageSegmentation: false,
+                extractingLayers: false,
+            })
+            console.log(error)
+            toast.error("Unable to perform your task, Dont worry your credits are not used.")
         }
-
-
-
-
     }
 
     function getThumbnail(videoId: string) {
@@ -124,6 +175,7 @@ export default function DashboardComp() {
                     <form onSubmit={handleSubmit} className="w-full md:w-[50%] flex items-center justify-center gap-2">
                         <Input value={videoLink} onChange={(e) => setVideoLink(e.target.value)} type="text" placeholder="Paste Your Youtube Video Link" className="w-full mt-2 p-2 border border-gray-300 rounded-md" />
                         <Button className="mt-2 p-2 bg-black text-white rounded-md">Get Thumbnail</Button>
+
                     </form>
                     {thumbnail && <Button className="bg-blue-400" onClick={ExtractData}>Start Editing</Button>}
                 </div>

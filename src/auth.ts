@@ -14,9 +14,7 @@ export const authConfig: NextAuthConfig = {
             const paths = ["/dashboard"]
             const isProtectedRoute = paths.some((path) => nextUrl.pathname.startsWith(path))
             if (isProtectedRoute && !isLoggedIn) {
-                const redirectUrl = new URL("/login", nextUrl.origin)
-                redirectUrl.searchParams.append("callbackUrl", nextUrl.pathname)
-                return Response.redirect(redirectUrl)
+                return Response.redirect(new URL("/login", nextUrl))
             }
             return true
         },
