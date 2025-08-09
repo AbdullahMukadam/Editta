@@ -1,5 +1,5 @@
 
-import Hero from "@/components/LandingPage/Hero";
+import Landing from "@/components/LandingPage/Landing";
 import { auth } from "../auth";
 import { redirect } from "next/navigation";
 
@@ -10,7 +10,7 @@ export default async function Home() {
   if (!session?.user) {
     return (
       <div className="w-full">
-        <Hero />
+        <Landing />
       </div>
     )
   } else {

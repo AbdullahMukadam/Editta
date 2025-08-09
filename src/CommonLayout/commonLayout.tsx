@@ -7,7 +7,10 @@ export default function CommonLayout({ children }: { children: React.ReactNode }
             <div className="w-full">
                 <Navbar />
             </div>
-            {children}
+            <main className="w-full h-full">
+                
+                {children}
+            </main>
             <Toaster />
         </div>
     )

@@ -23,7 +23,7 @@ export default async function Navbar() {
     },
   ]
   return (
-    <div className="w-full p-2 md:p-4 md:pl-8 md:pr-8 flex items-center justify-between font-brcolage-grotesque">
+    <div className="w-full p-2 md:p-4 md:pl-8 md:pr-8 flex items-center justify-between font-brcolage-grotesque z-50">
       <div className="font-bold text-xl md:w-[50%] w-full">
         <h1 className="text-2xl">Editta</h1>
       </div>

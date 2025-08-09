@@ -3,6 +3,9 @@ import DashboardComp from "@/components/Dashboard/DashboardComp";
 
 export default function Dashboard() {
     return (
-       <DashboardComp />
+        <div className="w-full h-full">
+           
+            <DashboardComp />
+        </div>
     )
 }

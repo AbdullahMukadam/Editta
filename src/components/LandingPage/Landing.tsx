@@ -4,7 +4,7 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { BsArrowRightCircle } from "react-icons/bs";
 import Footer from "../Common/Footer";
 
-export default function Hero() {
+export default function Landing() {
     return (
         <div className="w-full relative ">
             <div className="w-full relative">
@@ -15,11 +15,11 @@ export default function Hero() {
                 />
                 <div className="w-full absolute top-[0%] flex flex-col font-brcolage-grotesque p-2 md:p-5">
                     <div className="w-full p-3">
-                        <h2 className="font-bold text-[35px] md:text-[65px] lg:text-[80px] leading-12 md:leading-20 lg:leading-25">Create Youtube Video <span className="text-white bg-black p-2 rounded-md">Thumbnails</span> in Seconds.</h2>
+                        <h2 className="font-bold text-[35px] md:text-[65px] lg:text-[80px] leading-12 md:leading-20 lg:leading-25">Create Motion <span className="text-white bg-black p-2 rounded-md">Graphics</span> in Seconds.</h2>
                     </div>
                     <div className="w-full p-3 text-center flex items-center justify-center flex-col">
                         <div className="md:w-[50%] w-full">
-                            <p className="text-[15px] md:text-[15px]">Just paste any youtuve video url and it will give that thumbnail in editable format then you can edit it as per your need.</p>
+                            <p className="text-[15px] md:text-[15px]">Describe your vision in plain text and our advanced AI will instantly generate stunning, fully editable motion graphics. Fine-tune every element with our intuitive editor, then export your creation in any format you need—from MP4 to Lottie.</p>
                         </div>
                         <div className="md:w-[50%] w-full flex items-center justify-center gap-4 mt-3 ">
                             <button className="pt-2 pb-2 pl-5 pr-5 bg-black text-white rounded-lg cursor-pointer hover:bg-zinc-800">Try it</button>
@@ -37,10 +37,10 @@ export default function Hero() {
                             </div>
 
                             <h3 className="font-bold text-3xl md:text-4xl lg:text-5xl leading-tight">
-                                Easy to Use, Just Drag & Drop
+                                From Prompt to Pixel-Perfect, Instantly.
                             </h3>
                             <p className="text-gray-400 text-lg mt-3">
-                                No previous editing experience required. Get started in seconds.
+                                Our platform is built for creators, not coders. Whether you're a marketer, designer, or entrepreneur, you can produce professional-grade animations without writing a single line of code or learning complex software.
                             </p>
                             <div className="flex items-center gap-4 mt-8 justify-center lg:justify-start">
                                 <button
@@ -87,7 +87,7 @@ export default function Hero() {
                             </div>
 
                             <h2 className="font-bold text-4xl md:text-6xl lg:text-7xl leading-tight md:leading-snug">
-                                No Need to <span className="bg-black text-white px-3 py-1 rounded-lg">Waste Time</span> Creating Thumbnails From Scratch.
+                                Slash Your Workflow from Hours to Minutes. Stop Building <span className="bg-black text-white px-3 py-1 rounded-lg">From Scratch.</span>
                             </h2>
                         </div>
                     </section>
