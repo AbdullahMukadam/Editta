@@ -13,9 +13,9 @@ export default function Landing() {
                     width={1920}
                     height={1080}
                 />
-                <div className="w-full absolute top-[0%] flex flex-col font-brcolage-grotesque p-2 md:p-5">
+                <div className="w-full absolute top-[5%] flex flex-col font-brcolage-grotesque p-2 md:p-5">
                     <div className="w-full p-3">
-                        <h2 className="font-bold text-[35px] md:text-[65px] lg:text-[80px] leading-12 md:leading-20 lg:leading-25">Create Motion <span className="text-white bg-black p-2 rounded-md">Graphics</span> in Seconds.</h2>
+                        <h2 className="font-bold text-[35px] md:text-[65px] lg:text-[80px] leading-12 md:leading-20 lg:leading-22">Create Motion <span className="text-white bg-black p-2 rounded-md">Graphics</span> in Seconds.</h2>
                     </div>
                     <div className="w-full p-3 text-center flex items-center justify-center flex-col">
                         <div className="md:w-[50%] w-full">
