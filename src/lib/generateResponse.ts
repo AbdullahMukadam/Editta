@@ -67,7 +67,7 @@ async function generateMotionJSON(prompt: string) {
 
         const chat = model.startChat();
 
-        const result = await chat.sendMessage(prompt);
+        const result = await chat.sendMessage(prompt + " " + "If the prompt requires data then find that data on the internet and use it.");
 
         const call = result.response.functionCalls()?.[0];
         if (call) {

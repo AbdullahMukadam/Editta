@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import CommonLayout from "@/CommonLayout/commonLayout";
+import BluePrintContextProvider from "@/context/BluePrintContextProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${brcolageGrotesque.variable} antialiased max-w-[80rem] mx-auto`}>
-        <CommonLayout>{children}</CommonLayout>
+        <BluePrintContextProvider>
+          <CommonLayout>{children}</CommonLayout>
+        </BluePrintContextProvider>
       </body>
     </html>
   );
